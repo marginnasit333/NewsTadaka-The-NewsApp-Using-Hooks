@@ -31,11 +31,15 @@ export class News extends Component {
         document.title = `${this.props.category.toUpperCase()}-NewsTadaka`
     }
     async updateNews() {
+        this.props.setProgress(10);
         let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=f554715427484e2693f45a47c995b0c6&page=${this.state.page}&pageSize=${this.props.pageSize}`;
         this.setState({ loading: true });
         let data = await fetch(url);
+        this.props.setProgress(40);
         let parsedData = await data.json();
+        this.props.setProgress(70);
         this.setState({ articles: parsedData.articles, totalResults: parsedData.totalResults, loading: false })
+        this.props.setProgress(100);
     }
     async componentDidMount() {
         // let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=f554715427484e2693f45a47c995b0c6&page=1&pageSize=${this.props.pageSize}`;
